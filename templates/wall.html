@@ -1,0 +1,29 @@
+{% extends 'master.html' %}
+<html>
+    <head>
+    </head>
+    <body>
+        <!--id, owner_id, author_id, created_at, content-->
+        <div class="container">
+            {% block body %}
+            {% if session %}
+                <form class="wall_post" action="/user/{{username}}" method="POST">
+                    <input type="text" class="form-control" placeholder="What's on your mind?" name="wall_post">
+                    <input type="submit" class="btn btn-lg btn-primary btn-block" value="Submit">
+                </form>
+                {% for post in wall_posts %}
+                <div class="wall_post">
+                    {% if post[2] == None %}
+                    <h3 class="authorId">{{session['username']}}</h3>
+                    {% else %}
+                    <h3 class="authorId">{{author_name}}</h3>
+                    {% endif %}
+                    <h4 class="content">{{post[4]}}</h4>
+                    <h5 class="createdAt">{{post[3]}}</h5>
+                </div>
+                {% endfor %}
+            {% endif %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
